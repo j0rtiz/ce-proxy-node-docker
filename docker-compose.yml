@@ -3,15 +3,13 @@ version: '3.7'
 services:
   db:
     build:
-      context: .
-      dockerfile: Dockerfile.db
+      context: ./db
     restart: always
     networks:
       - node
   app:
     build:
-      context: .
-      dockerfile: Dockerfile.app
+      context: ./app
     networks:
       - node
     depends_on:
@@ -19,8 +17,7 @@ services:
     command: dockerize -wait tcp://db:3306 -timeout 20s npm run start
   proxy:
     build:
-      context: .
-      dockerfile: Dockerfile.proxy
+      context: ./proxy
     ports:
       - 8080:80
     networks:
